@@ -10,6 +10,8 @@ brew install datawire/blackbird/telepresence
 
 ## Quick example
 
+telepresence 默认会使用当前的 kubectl 的 current context 来进行请求。
+
 1. 在 Kubernetes 集群运行一个 hello-world 服务
 	```bash
 	kubectl run hello-world \
@@ -55,6 +57,7 @@ brew install datawire/blackbird/telepresence
 	```
 	
 	**notes**
+	
 	我们能够看到当前的 shell 命令行环境实际是一个 local shell，也就是说可以通过这个 shell 环境，能够连接到远端的 Kubernetes 集群
 	```bash
 	@kind-kind|bash-3.2$ pwd
@@ -63,6 +66,7 @@ brew install datawire/blackbird/telepresence
 	```
 	
 	**kubernetes cluster**
+	
 	同时我们能够看到 telepresence 在 kubernetes 集群中新建了一个 Pod(telepresence-lin)，以此作为代理，方便本地环境能够直接访问到集群中的其他服务
 	```bash
 	➜ kubectl get pod
@@ -72,6 +76,7 @@ brew install datawire/blackbird/telepresence
 	```
 	
 	**mount the pod's filesystem**
+	
 	*在 telepresence 运行的 shell 中*, 我们能够看到 Telepresence 将远端的文件系统通过 sshfs 挂载到本地
 	
 	```bash
