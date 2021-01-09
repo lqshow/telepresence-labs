@@ -3,6 +3,7 @@
 ```bash
 # required by sshfs to mount the pod's filesystem
 brew install --cask osxfuse
+
 # installing telepresence
 brew install datawire/blackbird/telepresence
 ```
