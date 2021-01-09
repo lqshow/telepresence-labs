@@ -42,3 +42,13 @@ XDP 平台已经全面微服务化，且完全拥抱 Kubernetes，通过 Kuberne
 
 ## Telepresence
 
+
+
+## Tools
+
+- [A cli that exposes your local resources to kubernetes](https://github.com/omrikiei/ktunnel)
+- [kubefwd](https://github.com/txn2/kubefwd)
+- [Manage and Integration with your Kubernetes dev environment more efficient.](https://github.com/alibaba/kt-connect)
+- [The debugger for microservices](https://squash.solo.io/)
+- [Easy and Repeatable Kubernetes Development](https://github.com/GoogleContainerTools/skaffold)
+- [Event-based Scripting for Kubernetes.](https://github.com/brigadecore/brigade)
