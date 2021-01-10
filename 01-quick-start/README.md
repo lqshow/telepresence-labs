@@ -57,6 +57,12 @@ telepresence 默认会使用当前的 kubectl 的 current context 来进行请�
 	@kind-kind|bash-3.2$
 	```
 	
+	**browser**
+	
+	再用浏览器访问该域名，仍然起作用，说明 telepresence 其实影响了整个机器环境。
+	
+	![image](https://user-images.githubusercontent.com/8086910/104115857-bf7b1080-534e-11eb-9ee1-0d8976ecc9c0.png)
+
 	**notes**
 	
 	我们能够看到当前的 shell 命令行环境实际是一个 local shell，也就是说可以通过这个 shell 环境，能够连接到远端的 Kubernetes 集群
