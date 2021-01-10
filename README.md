@@ -42,7 +42,14 @@ XDP 平台已经全面微服务化，且完全拥抱 Kubernetes，通过 Kuberne
 
 ## Telepresence
 
+[Telepresence](https://www.telepresence.io/) 是一个面向 Kubernetes 用户的开发测试环境治理的辅助工具，用于在本地轻松开发和调试服务，同时将服务代理到远程 Kubernetes 集群。 
 
+使用 [Telepresence](https://www.telepresence.io/) 开发者可以使用本地熟悉的 IDE 和调试工具运行一个服务，并提供对 Configmap、Secrets 和远程集群上运行的服务的完全访问，无缝与 Kubernetes 集群中的其他服务进行联调，让微服务本地开发不再难。
+
+**好处**
+
+1. 它能够在不修改代码的情况下，让本地应用程序无感知接入到 Kubernetes 集群中，简单来说就是可直接使用集群内的 PodIP， ClusterIP 以及 DNS 域名来访问集群中的其他服务。
+2. 因为 [Telepresence](https://www.telepresence.io/) 在 Kubernetes 集群中运行的 Pod 中部署了双向网络代理，所以不再是单向调用。简单来说，本地服务可以完全访问远程集群中的其他服务，同时远程集群中运行的服务也可以完全访问本地服务。
 
 ## Tools
 
@@ -52,3 +59,11 @@ XDP 平台已经全面微服务化，且完全拥抱 Kubernetes，通过 Kuberne
 - [The debugger for microservices](https://squash.solo.io/)
 - [Easy and Repeatable Kubernetes Development](https://github.com/GoogleContainerTools/skaffold)
 - [Event-based Scripting for Kubernetes.](https://github.com/brigadecore/brigade)
+
+
+## References
+
+- [Telepresence: fast, realistic local development for Kubernetes microservices](https://www.telepresence.io/)
+- [telepresence tutorials](https://www.telepresence.io/tutorials/kubernetes)
+- [Why your development workflow is so important for microservices](https://www.getambassador.io/resources/why-workflow/)
+- [Locally developing Kubernetes services (without waiting for a deploy)](https://hackernoon.com/locally-developing-kubernetes-services-without-waiting-for-a-deploy-f63995de7b99)
