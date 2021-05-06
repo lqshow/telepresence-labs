@@ -1,0 +1,95 @@
+// For format details, see https://aka.ms/vscode-remote/devcontainer.json or this file's README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.163.1/containers/go
+{
+	"name": "vscode remote development with telepresence example",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"args": {
+			"VARIANT": "1.16",
+			"INSTALL_ZSH": "true",
+			"INSTALL_OH_MYS": "true",
+
+			"KUBE_LATEST_VERSION": "v1.19.2",
+			"HELM_VERSION": "v3.3.4"
+		}
+	},
+
+	"runArgs": [
+		"--name=vscode-remote-development-with-telepresence-example",
+		"--env-file", "${localWorkspaceFolder}/.env",
+
+		"--cap-add=SYS_PTRACE",
+		"--cap-add=NET_ADMIN",
+		"--cap-add=NET_BIND_SERVICE",
+		"--network=host",
+
+		// Uncomment the next line if you will be using a ptrace-based debugger like C++, Go, and Rust.
+		"--privileged", "--security-opt", "seccomp=unconfined",
+
+		// Mount .ssh folder to /root/.ssh-localhost
+		"-v", "${env:HOME}${env:USERPROFILE}/.ssh:/root/.ssh-localhost:ro",
+		// Mounts the KUBECONFIG file
+		"-v", "${env:HOME}${env:USERPROFILE}/.kube:/root/.kube-localhost",
+		// Avoiding extension reinstalls on container rebuild
+		"-v", "${env:HOME}${env:USERPROFILE}/.vscode/extensions:/root/.vscode-server/extensions"
+	],
+
+	"mounts": [
+		// Mount GOPATH
+		"source=${localEnv:GOPATH}/src,target=/go/src,type=bind,consistency=cached",
+		"source=${localEnv:GOPATH}/pkg,target=/go/pkg,type=bind,consistency=cached"
+	],
+
+	"containerEnv": {
+		// [Optional] Sync localhost kubeconfig flag
+		"SYNC_LOCALHOST_KUBECONFIG": "true",
+		// Use KUBECONFIG environment variable, if specified
+		"KUBECONFIG": "/kube/config",
+		// The Kubernetes namespace to use.
+		"KUBERNETES_NAMESPACE": "${localEnv:KUBERNETES_NAMESPACE}",
+	},
+
+	// Use 'initializeCommand' to run on the host machine before the container is created
+	"initializeCommand": [
+		"${localWorkspaceFolder}/.devcontainer/export-local-kube-config.sh",
+	],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": [
+		"${containerWorkspaceFolder}/.devcontainer/run-devbox.sh"
+	],
+
+	// Use 'postAttachCommand' to run commands after VS Code has attached to a running container (in all cases).
+	"postAttachCommand": [
+		"${containerWorkspaceFolder}/.devcontainer/run-devbox.sh"
+	],
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [3000],
+
+	// Use 'portsAttributes' to set default properties for specific forwarded ports.
+	"portsAttributes": {
+		"3000": {
+			"label": "Example service",
+		}
+	},
+
+	// Set *default* container specific settings.json values on container create.
+	"settings": {
+		"remote.extensionKind": {
+			"ms-azuretools.vscode-docker": "workspace"
+		},
+		"editor.codeActionsOnSaveTimeout": 3000,
+		"terminal.integrated.shell.linux": "/bin/zsh",
+		"go.toolsManagement.checkForUpdates": "local",
+		"go.gopath": "/go",
+		"go.useLanguageServer": true,
+		"gopls": {
+			"usePlaceholders": false,
+			"staticcheck": true
+		}
+	},
+
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": []
+}
