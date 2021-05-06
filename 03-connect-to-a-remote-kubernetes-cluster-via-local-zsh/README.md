@@ -38,6 +38,7 @@ curl: (6) Could not resolve host: hello-world
 ```
 
 那么我们能不能够在本地开发环境通过熟悉的 zsh，快速和 kubernetes 集群中已有服务打通呢？
+
 ```bash
 # 1. 通过 telepresence 运行指定的 zsh 命令解决
 telepresence --new-deployment local-zsh --run zsh

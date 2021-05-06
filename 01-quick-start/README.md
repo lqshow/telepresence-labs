@@ -20,7 +20,8 @@ telepresence 默认会使用当前的 kubectl 的 current context 来进行请�
 		--port=8000 \
 		--expose
 	```
-2. 在本地启动 Telepresence，等待在 Kubernetes 集群中启动 network proxy pod  
+
+2. 在本地启动 Telepresence，等待在 Kubernetes 集群中启动 network proxy pod
 	```bash
 	# 启动一个指定部署名称的 Pod
 	telepresence --new-deployment telepresence-lin --run-shell
