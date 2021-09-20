@@ -39,17 +39,57 @@ XDP 平台已经全面微服务化，且完全拥抱 Kubernetes，通过 Kuberne
 
 不建议你这么做，首先你需要利用比如 docker-comose 编排工具或者是 [Kind](https://github.com/kubernetes-sigs/kind) 在本地部署好环境，且不说你本地开发机器有没那么大的资源，同时维护两套部署配置也是一个挺费劲的事。
 
-
 ## Telepresence
 
-[Telepresence](https://www.telepresence.io/) 是一个面向 Kubernetes 用户的开发测试环境治理的辅助工具，用于在本地轻松开发和调试服务，同时将服务代理到远程 Kubernetes 集群。 
+那么有没有什么工具可以解决以上提的这些问题呢，它就是 [Telepresence](https://www.telepresence.io/)。 [Telepresence](https://www.telepresence.io/) 对基于 `Kubernetes` 的开发者来说是种非常强大的调试工具，可以称之为调试利器。
 
-使用 [Telepresence](https://www.telepresence.io/) 开发者可以使用本地熟悉的 IDE 和调试工具运行一个服务，并提供对 Configmap、Secrets 和远程集群上运行的服务的完全访问，无缝与 Kubernetes 集群中的其他服务进行联调，让微服务本地开发不再难。
+[Telepresence](https://www.telepresence.io/) 现在默认使用 v2.x.x 版本安装，`v2` 官方用 `Golang` 做了重写，不论是实现方式和使用方式改变都是蛮大的，但是体验上比 [v1](https://github.com/lqshow/telepresence-labs/tree/telepresence_v1) 方便很多。
 
-**好处**
+### Telepresence 解决的问题
 
-1. 它能够在不修改代码的情况下，让本地应用程序无感知接入到 Kubernetes 集群中，简单来说就是可直接使用集群内的 PodIP， ClusterIP 以及 DNS 域名来访问集群中的其他服务。
-2. 因为 [Telepresence](https://www.telepresence.io/) 在 Kubernetes 集群中运行的 Pod 中部署了双向网络代理，所以不再是单向调用。简单来说，本地服务可以完全访问远程集群中的其他服务，同时远程集群中运行的服务也可以完全访问本地服务。
+1. [Telepresence](https://www.telepresence.io/) 是一个面向 `Kubernetes` 用户的开发测试环境治理的辅助工具，用于在本地轻松开发和调试服务，同时将服务代理到远程  `Kubernetes` 集群，无需等待容器做 `build`/`push`/`deploy`。
+2. 使用 [Telepresence](https://www.telepresence.io/) 开发者可以使用本地熟悉的 IDE 和调试工具运行一个服务，并提供对 `Configmap`、`Secrets` 和远程集群上运行的服务的完全访问，无缝与 `Kubernetes` 集群中的其他服务进行联调，让微服务本地开发不再难。
+3. 它能够在不修改代码的情况下，让本地应用程序无感知接入到 `Kubernetes` 集群中，简单来说就是可直接使用集群内的 `PodIP`， `ClusterIP` 以及 `DNS` 域名来访问集群中的其他服务。
+4. 因为 [Telepresence](https://www.telepresence.io/) 在 `Kubernetes` 集群中运行的 Pod 中部署了双向网络代理，所以不再是单向调用。简单来说，本地服务可以完全访问远程集群中的其他服务，同时远程集群中运行的服务也可以完全访问本地服务。
+
+
+
+在你开发机器上执行完以下命令后，你可以想象成你的本地环境就是 `Kubernetes` 集群中的一个 `Pod`，能够无感知接入到 `Kubernetes` 集群
+
+```bash
+telepresence connect
+```
+
+<img width="545" alt="Screen Shot 2021-09-20 at 7 17 42 PM" src="https://user-images.githubusercontent.com/8086910/133993977-2c1f7033-f4d4-4c39-9dce-70d43e6e97fb.png">
+
+<details>
+	<summary>mermaid code</summary>
+
+
+```
+graph TB
+
+classDef runtime fill:#fff,stroke-dasharray: 2 2;
+classDef apps color:#fff,fill:#fff
+subgraph cluster[Kubernetes in cloud]
+    subgraph one
+    app1[k8s.Service] --- app2[k8s.Service] --- app3[k8s.Service]
+    end
+
+    subgraph laptop[Laptop]
+    app[Your Service]
+    end
+
+    subgraph three
+    app3-1[k8s.Service] --- app3-2[k8s.Service] --- app3-3[k8s.Service]
+    end
+end
+
+class cluster,laptop runtime
+class one,three apps
+```
+
+</details>
 
 ## Tools
 
