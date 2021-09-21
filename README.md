@@ -41,7 +41,7 @@ XDP 平台已经全面微服务化，且完全拥抱 Kubernetes，通过 Kuberne
 
 ## Telepresence
 
-那么有没有什么工具可以解决以上提的这些问题呢，它就是 [Telepresence](https://www.telepresence.io/)。 [Telepresence](https://www.telepresence.io/) 对基于 `Kubernetes` 的开发者来说是种非常强大的调试工具，可以称之为调试利器。
+那么有没有什么工具可以解决以上提的这些问题呢，它就是 [Telepresence](https://www.telepresence.io/)。 [Telepresence](https://www.telepresence.io/) 对基于 `Kubernetes` 的开发者来说是种非常强大的调试工具，甚至可以称之为调试利器。
 
 [Telepresence](https://www.telepresence.io/) 现在默认使用 v2.x.x 版本安装，`v2` 官方用 `Golang` 做了重写，不论是实现方式和使用方式改变都是蛮大的，但是体验上比 [v1](https://github.com/lqshow/telepresence-labs/tree/telepresence_v1) 方便很多。
 
@@ -52,19 +52,18 @@ XDP 平台已经全面微服务化，且完全拥抱 Kubernetes，通过 Kuberne
 3. 它能够在不修改代码的情况下，让本地应用程序无感知接入到 `Kubernetes` 集群中，简单来说就是可直接使用集群内的 `PodIP`， `ClusterIP` 以及 `DNS` 域名来访问集群中的其他服务。
 4. 因为 [Telepresence](https://www.telepresence.io/) 在 `Kubernetes` 集群中运行的 Pod 中部署了双向网络代理，所以不再是单向调用。简单来说，本地服务可以完全访问远程集群中的其他服务，同时远程集群中运行的服务也可以完全访问本地服务。
 
+### 本地环境
 
-
-在你开发机器上执行完以下命令后，你可以想象成你的本地环境就是 `Kubernetes` 集群中的一个 `Pod`，能够无感知接入到 `Kubernetes` 集群
+在你开发机器上执行完以下命令后，你可以想象成你的本地环境就是 `Kubernetes` 集群中的一个 `Pod`，能够无感知接入到 `Kubernetes` 集群，[Telepresence](https://www.telepresence.io/) 让你的本地环境成为`集群中的一部分`成为可能。
 
 ```bash
 telepresence connect
 ```
 
-<img width="545" alt="Screen Shot 2021-09-20 at 7 17 42 PM" src="https://user-images.githubusercontent.com/8086910/133993977-2c1f7033-f4d4-4c39-9dce-70d43e6e97fb.png">
+<img width="545" alt="Screen Shot 2021-09-20 at 7 17 42 PM" src="./99-assets/00.png">
 
 <details>
 	<summary>mermaid code</summary>
-
 
 ```
 graph TB
@@ -87,6 +86,33 @@ end
 
 class cluster,laptop runtime
 class one,three apps
+```
+
+</details>
+
+### 开发现状的改变
+
+<img width="840" src="./99-assets/01.png">
+
+<details>
+	<summary>mermaid code</summary>
+
+```
+flowchart LR
+    Code --> code-build[Build] ---|"extra dev step ①"| build([Build Docker Image]) ---|"extra dev step ②"| push([Push Docker Image]) ---|"extra dev step ③"| deploy([Deploy Service]) --> Code
+```
+
+</details>
+
+
+<img width="145" src="./99-assets/02.png">
+
+<details>
+	<summary>mermaid code</summary>
+
+```
+flowchart LR
+    Code --> code-build[Build]
 ```
 
 </details>
