@@ -92,27 +92,40 @@ class one,three apps
 
 ### 开发现状的改变
 
-<img width="840" src="./99-assets/01.png">
+<img width="400" src="./99-assets/01.png">
 
 <details>
 	<summary>mermaid code</summary>
 
 ```
-flowchart LR
-    Code --> code-build[Build] ---|"extra dev step ①"| build([Build Docker Image]) ---|"extra dev step ②"| push([Push Docker Image]) ---|"extra dev step ③"| deploy([Deploy Service]) --> Code
+flowchart TB
+    classDef extra-step fill:#fff,stroke-dasharray: 2 2;
+    subgraph dev-local-step
+    Code --> code-build[Build]
+    end
+
+    subgraph extra-dev-step
+    build([Build Docker Image]) --> push([Push Docker Image]) --> deploy([Container deploy])
+    end
+
+    code-build ---> build
+    deploy ---> Code
+
+    class extra-dev-step extra-step
 ```
 
 </details>
 
-
-<img width="145" src="./99-assets/02.png">
+<img width="195" src="./99-assets/02.png">
 
 <details>
 	<summary>mermaid code</summary>
 
 ```
-flowchart LR
+flowchart TB
+    subgraph dev-local-step
     Code --> code-build[Build]
+    end
 ```
 
 </details>
