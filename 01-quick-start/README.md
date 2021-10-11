@@ -66,7 +66,7 @@ Hello, world!
 
 再用浏览器访问该域名，仍然起作用，说明 telepresence 其实影响了整个机器环境。
 
-![image](../99-assets/hello-world.png)
+<img width="1020" src="../99-assets/hello-world.png">
 
 
 [Telepresence v2](https://www.telepresence.io/) 通过 Kubernetes service 的 `服务名称` + `命名空间` + `端口` 访问服务，相比 [Telepresence v1](https://www.telepresence.io/docs/v1/discussion/overview/)，需要额外加上 `namespace`
